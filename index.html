@@ -29,8 +29,13 @@
                 <option value="0">No</option>
               </select>
             </div>
-            <div class="d-grid">
+            <div class="mb-3">
+              <label for="make_grid" class="form-label">How many rows?<span class="text-danger">*</span></label>
+              <input type="number" name="column_grid" class="form-control" step="1" min="2" value="2" />
+            </div>
+            <div class="d-grid gap-3">
               <button class="btn btn-primary" name="submit">Submit</button>
+              <button class="btn btn-light" name="submit-grid-only">Make Grid Only</button>
             </div>
           </div>
         </div>
@@ -40,7 +45,6 @@
           <div class="card-body">
             <p class="card-title">Selected Image(s)</p>
             <div class="d-flex gap-3 flex-wrap" id="image-previews"></div>
-            <canvas id="resultCanvas" class="w-100 d-none"></canvas>
           </div>
         </div>
       </div>
@@ -49,6 +53,7 @@
           <div class="card-body">
             <p class="card-title">Generated Image(s)</p>
             <div class="d-flex gap-3" id="generated-images"></div>
+            <canvas id="resultCanvas" class="w-100 border rounded d-none"></canvas>
           </div>
         </div>
       </div>

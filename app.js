@@ -109,7 +109,8 @@
 
     if (makeGrid) {
       // combine selected images into a grid and generate the background
-      const canvas = await combineImages(files, 2);
+      const column = document.querySelector('input[name="column_grid"]').value;
+      const canvas = await combineImages(files, column);
       const blob = await canvasToBlob(canvas);
       const json = await generate({backgroundType, image: blob});
       appendGeneratedImage(json.output);
@@ -126,6 +127,24 @@
     files = [];
     document.querySelector('button[name="submit"]').disabled = false;
     document.querySelector('button[name="submit"]').textContent = 'Submit';
+  });
+
+  document.querySelector('select[name="make_grid"]').addEventListener('change', function(e){
+    e.preventDefault();
+    if (e.currentTarget.value === '0') {
+      document.querySelector('button[name="submit-grid-only"]').classList.add('d-none');
+      document.querySelector('input[name="column_grid"]').parentElement.classList.add('d-none');
+    } else {
+      document.querySelector('button[name="submit-grid-only"]').classList.remove('d-none');
+      document.querySelector('input[name="column_grid"]').parentElement.classList.remove('d-none');
+    }
+  });
+
+  document.querySelector('button[name="submit-grid-only"]').addEventListener('click', async function(e){
+    e.preventDefault();
+    const column = document.querySelector('input[name="column_grid"]').value;
+    await combineImages(files, column);
+    document.getElementById('resultCanvas').classList.remove('d-none');
   });
 
 })();
