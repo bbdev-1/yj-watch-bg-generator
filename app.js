@@ -49,10 +49,34 @@
     files.forEach((file, index) => {
       const reader = new FileReader();
       reader.onload = (e) => {
+        // Create wrapper
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('img-wrapper');
+
+        // Create image
         const img = document.createElement('img');
         img.src = e.target.result;
-        img.classList.add('thumbnail')
-        previewContainer.appendChild(img);
+        img.classList.add('thumbnail');
+
+        // Create close button
+        const closeBtn = document.createElement('button');
+        closeBtn.classList.add('close-btn');
+        closeBtn.setAttribute('data-index', index);
+        closeBtn.innerText = '✕';
+
+        // Add click event to remove the image
+        closeBtn.addEventListener('click', (e) => {
+          const targetIndex = e.target.getAttribute('data-index');
+          files.splice(targetIndex, 1);
+          updateImagePreviews();
+        });
+
+        // Append to wrapper
+        wrapper.appendChild(img);
+        wrapper.appendChild(closeBtn);
+
+        // Add to container
+        previewContainer.appendChild(wrapper);
         document.querySelector('input[name="images[]"]').value = '';
       };
       reader.readAsDataURL(file);
